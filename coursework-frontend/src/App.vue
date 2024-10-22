@@ -1,16 +1,50 @@
 <script setup>
+import SortBar from './components/SortBar.vue'
 import LessonsPage from './components/LessonsPage.vue'
 import lessons from './assets/lessons.json'
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 const lessonsList = ref(lessons)
+const sortOrder = ref('asc')
+const sortField = ref('none')
+const updateSort = ({field, order}) => {
+  sortField.value = field
+  sortOrder.value = order
+}
+
+watch([sortOrder, sortField], () => {
+  
+  console.log(sortField.value)
+  console.log(sortOrder.value)
+  if(sortField.value == 'none')
+    return
+
+  lessonsList.value.sort((a, b) => {
+    let compareA = a[sortField.value]
+    let compareB = b[sortField.value]
+
+    // Handle numeric sorting for fields like Price and Spaces
+    if (sortField.value === 'Price') {
+      compareA = parseInt(compareA.replace('£', '')) || compareA
+      compareB = parseInt(compareB.replace('£', '')) || compareB
+    }
+    else if(sortField.value === 'Spaces'){
+      compareA = parseInt(compareA) || compareA
+      compareB = parseInt(compareB) || compareB
+    }
+
+    if (sortOrder.value === 'asc') {
+      return compareA > compareB ? 1 : -1
+    } else {
+      return compareA < compareB ? 1 : -1
+    }
+  })})
+
 </script>
 
 <template>
-  <header>
-    
-  </header>
 
   <main>
+    <SortBar @updateSort="updateSort"/>
     <LessonsPage :lessons="lessonsList" />
   </main>
 </template>

@@ -22,7 +22,6 @@
 
 <script setup>
 const props = defineProps({lessons: {type:Array, required: true}})
-console.log(props.lessons)
 </script>
 
 <style scoped>

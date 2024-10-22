@@ -38,5 +38,45 @@
     "Price": "£100",
     "Spaces": 5,
     "icon": "https://img.icons8.com/color/48/000000/pen.png"
+  },
+  {
+    "id": 6,
+    "Subject": "Science",
+    "Location": "Manchester",
+    "Price": "£110",
+    "Spaces": 5,
+    "icon": "https://img.icons8.com/color/48/000000/test-tube.png"
+  },
+  {
+    "id": 7,
+    "Subject": "History",
+    "Location": "Leeds",
+    "Price": "£90",
+    "Spaces": 5,
+    "icon": "https://img.icons8.com/color/48/000000/book.png"
+  },
+  {
+    "id": 8,
+    "Subject": "Geography",
+    "Location": "Birmingham",
+    "Price": "£85",
+    "Spaces": 5,
+    "icon": "https://img.icons8.com/color/48/000000/map.png"
+  },
+  {
+    "id": 9,
+    "Subject": "Art",
+    "Location": "Edinburgh",
+    "Price": "£95",
+    "Spaces": 5,
+    "icon": "https://img.icons8.com/color/48/000000/paint-palette.png"
+  },
+  {
+    "id": 10,
+    "Subject": "Math",
+    "Location": "Cambridge",
+    "Price": "£105",
+    "Spaces": 5,
+    "icon": "https://img.icons8.com/color/48/000000/calculator.png"
   }
 ]
