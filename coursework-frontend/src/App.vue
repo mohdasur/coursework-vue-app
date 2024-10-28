@@ -10,11 +10,32 @@ const updateSort = ({field, order}) => {
   sortField.value = field
   sortOrder.value = order
 }
+const addToCart = (lessonId) => {
+  const index = lessonsList.value.findIndex(lesson => lesson.id === lessonId)
+  if(index === -1)
+    return
 
-watch([sortOrder, sortField], () => {
+  const updatedLessons = [...lessonsList.value]
+  if (updatedLessons[index].Spaces > 0) {
+    updatedLessons[index].Spaces -= 1
+
+    // // Check if the lesson is already in the cart
+    // const cartIndex = cart.value.findIndex(item => item.Sport === updatedLessons[index].Sport)
+
+    // if (cartIndex !== -1) {
+    //   // Increase quantity if it's already in the cart
+    //   cart.value[cartIndex].quantity += 1
+    // } else {
+    //   // Add new item to cart with quantity 1
+    //   cart.value.push({ ...updatedLessons[index], quantity: 1 })
+    // }
+  }
+  lessonsList.value = updatedLessons
+}
+
+watch([sortOrder, sortField, lessonsList], () => {
   
-  console.log(sortField.value)
-  console.log(sortOrder.value)
+  
   if(sortField.value == 'none')
     return
 
@@ -45,7 +66,7 @@ watch([sortOrder, sortField], () => {
 
   <main>
     <SortBar @updateSort="updateSort"/>
-    <LessonsPage :lessons="lessonsList" />
+    <LessonsPage :lessons="lessonsList" @addToCart="addToCart" />
   </main>
 </template>
 

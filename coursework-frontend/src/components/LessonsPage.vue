@@ -22,6 +22,7 @@
 
 <script setup>
 const props = defineProps({lessons: {type:Array, required: true}})
+const emit = defineEmits('addToCart')
 </script>
 
 <style scoped>
@@ -72,7 +73,17 @@ const props = defineProps({lessons: {type:Array, required: true}})
     cursor: pointer;
     font-size: 1rem;
     border-radius: 5px;
-  }
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.add-to-cart-button:disabled {
+    background-color: #888; /* Change to a distinct grey */
+    color: #ccc; /* Lighten text color */
+    opacity: 0.6; /* Add slight transparency */
+    cursor: not-allowed;
+    text-decoration: line-through; /* Optional: strikethrough for added clarity */
+}
+
 
   .add-to-cart-button:disabled {
     background-color: #ccc;
