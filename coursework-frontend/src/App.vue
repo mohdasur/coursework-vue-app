@@ -4,6 +4,7 @@ import LessonsPage from './components/LessonsPage.vue'
 import lessons from './assets/lessons.json'
 import CartPage from './components/CartPage.vue'
 import CheckoutModal from './components/CheckoutModal.vue'
+import SearchBox from './components/SearchBox.vue'
 import {ref, watch} from 'vue'
 const lessonsList = ref(lessons)
 const cartsList = ref([])
@@ -13,6 +14,11 @@ const sortField = ref('none')
 const modalMessage = ref('')  // To store modal message
 const modalTitle = ref('')    // To store modal title
 const showCheckoutModal = ref(false)
+const query = ref('')
+
+const updateQuery = (q) => {
+  query.value = q
+}
 
 const checkout = (customerName, customerPhone) => {
   cartsList.value = []
@@ -106,7 +112,10 @@ watch([sortOrder, sortField, lessonsList], () => {
 
   <main>
     <SortBar @updateSort="updateSort"/>
-    <LessonsPage :lessons="lessonsList" @addToCart="addToCart" />
+    <div>
+    <SearchBox @updateQuery="updateQuery" />
+    <LessonsPage :lessons="lessonsList" :query="query" @addToCart="addToCart"  />
+  </div>
     <button @click="toggleShowCart" :disabled="cartsList.length === 0" class="cart-button">
         🛒 Cart ({{ cartsList.length }})
     </button>
