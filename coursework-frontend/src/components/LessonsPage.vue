@@ -85,11 +85,6 @@ const emit = defineEmits('addToCart')
 }
 
 
-  .add-to-cart-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-
   @media (max-width: 1430px) {
     .lessons-grid {
         width: 600px;
