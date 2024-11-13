@@ -25,7 +25,6 @@ const fetchLessons = async () => {
       let index = lessonsList.value.findIndex(lesson => lesson.id === item.id)
       if (index !== -1) {
         lessonsList.value[index].Spaces -= item.Spaces
-        console.log("fetchLessons")
       }
     }
   })
@@ -74,7 +73,6 @@ const checkout = async(customerName, customerPhone) => {
     const temp = query.value
     query.value = ""
     await fetchLessons()
-    console.log("Yes")
     for (const lesson of cartsList.value) {
       let index = lessonsList.value.findIndex(item => item.id === lesson.id)
       const response = await fetch(`https://coursework-express.onrender.com/lesson/${lesson.id}`, {
@@ -91,8 +89,8 @@ const checkout = async(customerName, customerPhone) => {
       }
     }
     query.value = temp
-    await fetchLessons()
   } catch (error) {
+    await fetchLessons()
     console.error(error)
     toggleShowCart()
   
@@ -103,6 +101,7 @@ const checkout = async(customerName, customerPhone) => {
     return
   }
   cartsList.value = []
+  await fetchLessons()
   toggleShowCart()
   
 
