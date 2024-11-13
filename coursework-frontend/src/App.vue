@@ -15,9 +15,9 @@ const modalTitle = ref('')    // To store modal title
 const showCheckoutModal = ref(false)
 const query = ref('')
 
-const fetchLessons = () => {
+const fetchLessons = async () => {
 
-  fetch(`https://coursework-express.onrender.com/lessons?search=${query.value}`)
+  await fetch(`https://coursework-express.onrender.com/lessons?search=${query.value}`)
   .then(res => res.json())
   .then(res => {
     lessonsList.value = res
@@ -25,7 +25,7 @@ const fetchLessons = () => {
       let index = lessonsList.value.findIndex(lesson => lesson.id === item.id)
       if (index !== -1) {
         lessonsList.value[index].Spaces -= item.Spaces
-        console.log(lessonsList.value[index])
+        console.log("fetchLessons")
       }
     }
   })
@@ -71,6 +71,10 @@ const checkout = async(customerName, customerPhone) => {
   }
 
   try {
+    const temp = query.value
+    query.value = ""
+    await fetchLessons()
+    console.log("Yes")
     for (const lesson of cartsList.value) {
       let index = lessonsList.value.findIndex(item => item.id === lesson.id)
       const response = await fetch(`https://coursework-express.onrender.com/lesson/${lesson.id}`, {
@@ -86,6 +90,8 @@ const checkout = async(customerName, customerPhone) => {
         throw new Error('Error updating lessons')
       }
     }
+    query.value = temp
+    await fetchLessons()
   } catch (error) {
     console.error(error)
     toggleShowCart()
@@ -210,6 +216,7 @@ header {
 }
 
 .cart-button {
+    z-index: 1000;
     position: fixed;
     bottom: 20px;
     right: 20px;
