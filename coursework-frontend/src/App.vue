@@ -69,6 +69,33 @@ const checkout = async(customerName, customerPhone) => {
     toggleShowCheckoutModal()
     return
   }
+
+  try {
+    for (const lesson of cartsList.value) {
+      let index = lessonsList.value.findIndex(item => item.id === lesson.id)
+      const response = await fetch(`https://coursework-express.onrender.com/lesson/${lesson.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Spaces: lessonsList.value[index].Spaces,
+        }),
+      })
+      if (!response.ok) {
+        throw new Error('Error updating lessons')
+      }
+    }
+  } catch (error) {
+    console.error(error)
+    toggleShowCart()
+  
+
+    modalTitle.value = 'Failed to Update Spaces'
+    modalMessage.value = `Sorry, ${customerName}. Failed.`
+    toggleShowCheckoutModal()
+    return
+  }
   cartsList.value = []
   toggleShowCart()
   
