@@ -42,11 +42,37 @@ const updateQuery = (q) => {
 
 }
 
-const checkout = (customerName, customerPhone) => {
+const checkout = async(customerName, customerPhone) => {
+  try{
+    const res = await fetch(`https://coursework-express.onrender.com/order`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Name : customerName,
+        Phone : customerPhone,
+        Lessons : cartsList.value
+      })
+
+    })
+    if(!res.ok) {
+      throw new Error("Response not okay")
+    } 
+  } catch(error) {
+    console.error(error)
+    toggleShowCart()
+  
+
+    modalTitle.value = 'Checkout Failed'
+    modalMessage.value = `Sorry, ${customerName}. Checkout Failed.`
+    toggleShowCheckoutModal()
+    return
+  }
   cartsList.value = []
   toggleShowCart()
+  
 
-  // Show modal after successful checkout
   modalTitle.value = 'Checkout Successful'
   modalMessage.value = `Thank you, ${customerName}. Your order is confirmed! with following number: ${customerPhone}`
   toggleShowCheckoutModal()
