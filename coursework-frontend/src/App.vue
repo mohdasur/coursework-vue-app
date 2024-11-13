@@ -19,8 +19,18 @@ const fetchLessons = () => {
 
   fetch(`https://coursework-express.onrender.com/lessons?search=${query.value}`)
   .then(res => res.json())
-  .then(res => lessonsList.value = res)
+  .then(res => {
+    lessonsList.value = res
+    for (const item of cartsList.value) {
+      let index = lessonsList.value.findIndex(lesson => lesson.id === item.id)
+      if (index !== -1) {
+        lessonsList.value[index].Spaces -= item.Spaces
+        console.log(lessonsList.value[index])
+      }
+    }
+  })
   .catch(error => console.error(error));
+  
   
 }
 
@@ -29,6 +39,7 @@ fetchLessons()
 const updateQuery = (q) => {
   query.value = q
   fetchLessons()
+
 }
 
 const checkout = (customerName, customerPhone) => {
