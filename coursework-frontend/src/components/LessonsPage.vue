@@ -1,6 +1,6 @@
 <template>
 <div class="lessons-grid">
-        <div v-for="lesson in lessons.filter(lesson => matchQuery(lesson))" :key="lesson.id" class="lesson-card">
+        <div v-for="lesson in lessons" :key="lesson.id" class="lesson-card">
             <img :src="lesson.icon" :alt="lesson.Subject + ' icon'" class="lesson-icon" />
             <div class="lesson-details">
                 <h2>{{ lesson.Subject }}</h2>
@@ -21,19 +21,8 @@
 </template>
 
 <script setup>
-const props = defineProps({lessons: {type:Array, required: true}, query: {type:String, required: true}})
+const props = defineProps({lessons: {type:Array, required: true}})
 const emit = defineEmits('addToCart')
-const matchQuery = (lesson) => {
-        if(props.query === '') {
-            return true
-        }
-        return (
-            lesson.Subject.toLowerCase().includes(props.query.toLowerCase()) ||
-            lesson.Location.toLowerCase().includes(props.query.toLowerCase()) ||
-            lesson.Price.toLowerCase().includes(props.query.toLowerCase()) ||
-            String(lesson.Spaces).includes(props.query.toLowerCase())
-        )
-    }
 </script>
 
 <style scoped>

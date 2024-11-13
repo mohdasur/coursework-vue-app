@@ -1,12 +1,11 @@
 <script setup>
 import SortBar from './components/SortBar.vue'
 import LessonsPage from './components/LessonsPage.vue'
-import lessons from './assets/lessons.json'
 import CartPage from './components/CartPage.vue'
 import CheckoutModal from './components/CheckoutModal.vue'
 import SearchBox from './components/SearchBox.vue'
 import {ref, watch} from 'vue'
-const lessonsList = ref(lessons)
+const lessonsList = ref([])
 const cartsList = ref([])
 const showCart = ref(false)
 const sortOrder = ref('asc')
@@ -16,8 +15,20 @@ const modalTitle = ref('')    // To store modal title
 const showCheckoutModal = ref(false)
 const query = ref('')
 
+const fetchLessons = () => {
+
+  fetch(`https://coursework-express.onrender.com/lessons?search=${query.value}`)
+  .then(res => res.json())
+  .then(res => lessonsList.value = res)
+  .catch(error => console.error(error));
+  
+}
+
+fetchLessons()
+
 const updateQuery = (q) => {
   query.value = q
+  fetchLessons()
 }
 
 const checkout = (customerName, customerPhone) => {
